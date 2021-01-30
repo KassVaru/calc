@@ -1,0 +1,17 @@
+abs;wartość absolutna;abs x;abs(2 + 12)
+acos;arcus cosinus;abs x;acos(2^2)
+asin;arcus sinus;asin x;asin 19
+atan;arcus tangens;atan x;abs(2 / 12)
+ceil;zaokrąglanie w górę;ceil x;ceil 7.02
+cos;cosinus;cos x; cos 45 + 9
+e;liczba Euler'a;e;e + 1
+exp;potęga z liczby Euler'a;exp x;exp 4 * 9
+fac;silnia;fac x;fac 5 + 30
+floor;zaokrąglenie w dół;floor x;floor (4 * 0.548)
+log;logarytm;log x;log 4 + 2
+log10;logarytm o podstawie 10;log10 x;log10 5 + 48
+pi;wartość liczby pi;pi;pi + 1
+pow;potęga;pow(x,y);pow(2,7)
+sin;sinus;sin x;sin (14/5)
+sqrt;pierwiastek;sqrt x;sqrt(14+9)
+tan;tangens;tan x;tan 84

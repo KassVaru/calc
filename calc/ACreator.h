@@ -1,4 +1,7 @@
 #include <iostream>
+#include <fstream>
+#include <vector>
+#include <sstream>
 #include "AAnalyzer.h"
 #include "Console.h"
 using namespace std;
@@ -11,8 +14,12 @@ public:
 	ACreator();
 private:
 	Console Console;
+	wifstream plik;
+	vector<vector<wstring>> features;
 	int Menu();
 	void ListFeatures();
 	void GetUserExpression();
+	void ShowFeaturesFromFile();
+	vector<wstring> parseData(wstring line);
 };
 

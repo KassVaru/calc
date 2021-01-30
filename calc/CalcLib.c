@@ -1,4 +1,9 @@
 #include "CalcLib.h"
+#include <stdlib.h>
+#include <math.h>
+#include <stdio.h>
+#include <limits.h>
+
 
 #ifndef NAN
     #define NAN (0.0/0.0)
@@ -15,7 +20,11 @@ typedef struct state {
     const char *start;
     const char *next;
     int type;
-    union {double value; const double *bound; const void *function;};
+    union {
+        double value;
+        const double* bound;
+        const void* function;
+    };
     void *context;
 
     const variable *lookup;
@@ -46,17 +55,17 @@ static express *new_expr(const int type, const express *parameters[]) {
 void free_parameters(express *n) {
     if (!n) return;
     switch (TYPE_MASK(n->type)) {
-        case FUNCTION7: case CLOSURE7: free(n->parameters[6]);
-        case FUNCTION6: case CLOSURE6: free(n->parameters[5]);
-        case FUNCTION5: case CLOSURE5: free(n->parameters[4]);
-        case FUNCTION4: case CLOSURE4: free(n->parameters[3]);
-        case FUNCTION3: case CLOSURE3: free(n->parameters[2]);
-        case FUNCTION2: case CLOSURE2: free(n->parameters[1]);
-        case FUNCTION1: case CLOSURE1: free(n->parameters[0]);
+        case FUNCTION7: case CLOSURE7: ex_free(n->parameters[6]);
+        case FUNCTION6: case CLOSURE6: ex_free(n->parameters[5]);
+        case FUNCTION5: case CLOSURE5: ex_free(n->parameters[4]);
+        case FUNCTION4: case CLOSURE4: ex_free(n->parameters[3]);
+        case FUNCTION3: case CLOSURE3: ex_free(n->parameters[2]);
+        case FUNCTION2: case CLOSURE2: ex_free(n->parameters[1]);
+        case FUNCTION1: case CLOSURE1: ex_free(n->parameters[0]);
     }
 }
 
-void free(express *n) {
+void ex_free(express *n) {
     if (!n) return;
     free_parameters(n);
     free(n);
@@ -84,10 +93,8 @@ static const variable functions[] = {
     {"acos", acos,    FUNCTION1 | FLAG_PURE, 0},
     {"asin", asin,    FUNCTION1 | FLAG_PURE, 0},
     {"atan", atan,    FUNCTION1 | FLAG_PURE, 0},
-    {"atan2", atan2,  FUNCTION2 | FLAG_PURE, 0},
     {"ceil", ceil,    FUNCTION1 | FLAG_PURE, 0},
     {"cos", cos,      FUNCTION1 | FLAG_PURE, 0},
-    {"cosh", cosh,    FUNCTION1 | FLAG_PURE, 0},
     {"e", e,          FUNCTION0 | FLAG_PURE, 0},
     {"exp", exp,      FUNCTION1 | FLAG_PURE, 0},
     {"fac", silnia,   FUNCTION1 | FLAG_PURE, 0},
@@ -97,10 +104,8 @@ static const variable functions[] = {
     {"pi", pi,        FUNCTION0 | FLAG_PURE, 0},
     {"pow", pow,      FUNCTION2 | FLAG_PURE, 0},
     {"sin", sin,      FUNCTION1 | FLAG_PURE, 0},
-    {"sinh", sinh,    FUNCTION1 | FLAG_PURE, 0},
     {"sqrt", sqrt,    FUNCTION1 | FLAG_PURE, 0},
     {"tan", tan,      FUNCTION1 | FLAG_PURE, 0},
-    {"tanh", tanh,    FUNCTION1 | FLAG_PURE, 0},
     {0, 0, 0, 0}
 };
 
@@ -135,12 +140,12 @@ static const variable *find_lookup(const state *s, const char *name, int len) {
     return 0;
 }
 
-static double add(double a, double b) {return a + b;}
-static double sub(double a, double b) {return a - b;}
-static double mul(double a, double b) {return a * b;}
-static double divide(double a, double b) {return a / b;}
-static double negate(double a) {return -a;}
-static double comma(double a, double b) {(void)a; return b;}
+static double add(double x, double y) {return x + y;}
+static double sub(double x, double y) {return x - y;}
+static double mul(double x, double y) {return x * y;}
+static double divide(double x, double y) {return x / y;}
+static double negate(double x) {return -x;}
+static double comma(double x, double y) {(void)x; return y;}
 
 void next_token(state *s) {
     s->type = EX_NULL;
@@ -427,17 +432,17 @@ static void optimize(express* n) {
     }
 }
 
-express *compile(const char *expression, const variable *variables, int var_count, int *error) {
+express *compile(const char *expr, const variable *vars, int count, int *error) {
     state s;
-    s.start = s.next = expression;
-    s.lookup = variables;
-    s.lookup_len = var_count;
+    s.start = s.next = expr;
+    s.lookup = vars;
+    s.lookup_len = count;
 
     next_token(&s);
     express *root = list(&s);
 
     if (s.type != END) {
-        free(root);
+        ex_free(root);
         if (error) {
             *error = (s.next - s.start);
             if (*error == 0) *error = 1;
@@ -450,12 +455,12 @@ express *compile(const char *expression, const variable *variables, int var_coun
     }
 }
 
-double interpretate(const char *expression, int *error) {
-    express *n = compile(expression, 0, 0, error);
+double interpretate(const char* expr, int *error) {
+    express *n = compile(expr, 0, 0, error);
     double ret;
     if (n) {
         ret = evaluate(n);
-        free(n);
+        ex_free(n);
     } else {
         ret = NAN;
     }

@@ -1,11 +1,8 @@
 #include "AAnalyzer.h"
 #include "Console.h"
 
-AAnalyzer::AAnalyzer(string exp)
+AAnalyzer::AAnalyzer(string expr)
 {
-	//const char* charExpression = exp.c_str();
-	//double result = te_interp(charExpression, 0);
-	//string value = to_string(result);
-	//Console.Log(value, Console.WHITE);
-
+	double result = interpretate(expr.c_str(), 0);
+	Console.Log(to_string(result), Console.WHITE);
 }

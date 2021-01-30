@@ -23,7 +23,7 @@
     <ClCompile Include="Console.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="tinyexpr.c">
+    <ClCompile Include="CalcLib.c">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
@@ -37,7 +37,7 @@
     <ClInclude Include="Console.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="tinyexpr.h">
+    <ClInclude Include="CalcLib.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>

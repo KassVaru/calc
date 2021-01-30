@@ -143,13 +143,13 @@
     <ClCompile Include="ACreator.cpp" />
     <ClCompile Include="calc.cpp" />
     <ClCompile Include="Console.cpp" />
-    <ClCompile Include="tinyexpr.c" />
+    <ClCompile Include="CalcLib.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AAnalyzer.h" />
     <ClInclude Include="ACreator.h" />
     <ClInclude Include="Console.h" />
-    <ClInclude Include="tinyexpr.h" />
+    <ClInclude Include="CalcLib.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

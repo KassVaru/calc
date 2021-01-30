@@ -3,7 +3,7 @@
 #include <tchar.h>
 #include "ACreator.h"
 #include "AAnalyzer.h"
-#include "tinyexpr.h"
+#include "CalcLib.h"
 
 using namespace std;
 
