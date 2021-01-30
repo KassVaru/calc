@@ -1,11 +1,15 @@
-﻿// calc.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
-//
-
-#include <iostream>
+﻿#include <iostream>
+#include <locale.h>
+#include <tchar.h>
+#include "ACreator.h"
+#include "AAnalyzer.h"
+#include "tinyexpr.h"
 
 using namespace std;
 
 int main()
 {
-    cout << "Hello World!\n";
+	setlocale(LC_ALL, "");
+	SetConsoleTitle(_T("Projekt Calc - Piotr Wasielewski"));
+	ACreator creator;
 }

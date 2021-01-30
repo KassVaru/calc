@@ -139,7 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AAnalyzer.cpp" />
+    <ClCompile Include="ACreator.cpp" />
     <ClCompile Include="calc.cpp" />
+    <ClCompile Include="Console.cpp" />
+    <ClCompile Include="tinyexpr.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AAnalyzer.h" />
+    <ClInclude Include="ACreator.h" />
+    <ClInclude Include="Console.h" />
+    <ClInclude Include="tinyexpr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
